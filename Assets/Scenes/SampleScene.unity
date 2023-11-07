@@ -537,6 +537,7 @@ GameObject:
   - component: {fileID: 293065432}
   - component: {fileID: 293065431}
   - component: {fileID: 293065436}
+  - component: {fileID: 293065437}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -556,9 +557,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31890bee57317c345b8d48d5aaea14f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  vitesse: 2
-  rotationSpeed: 200
-  dernierInput: 0
+  vitesse: 50
+  rotationSpeed: 25
+  deceleration: 3
 --- !u!136 &293065432
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -655,6 +656,23 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &293065437
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 293065430}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3aa61c68980c15d4698052b5fb56f613, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxSpeed: 20
+  rotationSpeed: 25
+  acceleration: 10
+  steeringFactor: 1
+  deceleration: 3
 --- !u!1001 &304976783
 PrefabInstance:
   m_ObjectHideFlags: 0
