@@ -2,14 +2,15 @@ using UnityEngine;
 
 public class Mouvement : MonoBehaviour
 {
-    public float maxSpeed = 20f;
-    public float rotationSpeed = 2.0f;
-    public float acceleration = 10.0f;
-    public float steeringFactor = 1f;
-    public float deceleration = 3f;
-
     private Rigidbody rb;
-    private float currentSpeed = 0.0f;
+    public float vitesse = 5.0f;
+    public float rotationSpeed = 45.0f;
+    private int dernierInput = 0;
+    private int nouvelInput = 0;
+    public float deceleration = 3f;
+    private Vector3 moveDirection = Vector3.zero;
+    private float rotationSpeedRight = 0.0f;
+    private float rotationSpeedLeft = 0.0f;
 
     private void Start()
     {
@@ -18,32 +19,81 @@ public class Mouvement : MonoBehaviour
 
     private void Update()
     {
-        float inputSpeed = 0.0f;
-        float inputRotation = 0.0f;
+        moveDirection = Vector3.zero;
 
-        if (Input.GetKey(KeyCode.Z))
+        if (Input.GetKey(KeyCode.A))
         {
-            inputSpeed = 1.0f;
-            inputRotation = steeringFactor;
+            nouvelInput = 1;
         }
-        if (Input.GetKey(KeyCode.E))
+        else if (Input.GetKey(KeyCode.Z))
         {
-            inputSpeed = 1.0f;
-            inputRotation = -steeringFactor;
+            nouvelInput = 2;
+        }
+        else if (Input.GetKey(KeyCode.E))
+        {
+            nouvelInput = 3;
+        }
+        else if (Input.GetKey(KeyCode.R))
+        {
+            nouvelInput = 4;
+        }
+        else if (Input.GetKey(KeyCode.T))
+        {
+            nouvelInput = 5;
+        }
+        else if (Input.GetKey(KeyCode.Y))
+        {
+            nouvelInput = 6;
+        }
+        else if (Input.GetKey(KeyCode.U))
+        {
+            nouvelInput = 7;
+        }
+        else if (Input.GetKey(KeyCode.I))
+        {
+            nouvelInput = 8;
         }
 
-        if (Input.GetKey(KeyCode.Z) && Input.GetKey(KeyCode.E))
+        if (nouvelInput > dernierInput)
         {
-            inputRotation = 0.0f;
+            if (nouvelInput <= 4)
+            {
+                moveDirection = transform.forward * vitesse;
+                rotationSpeedRight = -rotationSpeed;
+                if (nouvelInput > 4)
+                {
+                    rotationSpeedLeft = 0.0f;
+                }
+            }
+            else
+            {
+                moveDirection = transform.forward * vitesse;
+                rotationSpeedLeft = rotationSpeed;
+                if (nouvelInput <= 4)
+                {
+                    rotationSpeedRight = 0.0f;
+                }
+            }
+        }
+       
+
+        rotationSpeedRight = Mathf.Lerp(rotationSpeedRight, 0, deceleration * Time.deltaTime);
+        rotationSpeedLeft = Mathf.Lerp(rotationSpeedLeft, 0, deceleration * Time.deltaTime);
+
+        transform.Rotate(Vector3.up, (rotationSpeedRight + rotationSpeedLeft) * Time.deltaTime);
+
+        if (moveDirection != Vector3.zero)
+        {
+            rb.velocity = moveDirection;
+        }
+        else
+        {
+            rb.velocity *= 1f - deceleration * Time.deltaTime;
         }
 
-        if (!Input.GetKey(KeyCode.Z) && !Input.GetKey(KeyCode.E))
+        if (nouvelInput > 0)
         {
-            currentSpeed = Mathf.Lerp(currentSpeed, 0.0f, deceleration * Time.deltaTime);
+            dernierInput = nouvelInput;
         }
-
-        currentSpeed = Mathf.Clamp(currentSpeed + inputSpeed * acceleration * Time.deltaTime, -maxSpeed, maxSpeed);
-        rb.MoveRotation(rb.rotation * Quaternion.Euler(0, inputRotation * rotationSpeed * Time.deltaTime, 0));
-        rb.velocity = transform.forward * currentSpeed;
     }
 }
