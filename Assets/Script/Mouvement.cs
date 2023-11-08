@@ -37,19 +37,19 @@ public class Mouvement : MonoBehaviour
         {
             nouvelInput = 4;
         }
-        else if (Input.GetKey(KeyCode.Q))
+        else if (Input.GetKey(KeyCode.T))
         {
             nouvelInput = 5;
         }
-        else if (Input.GetKey(KeyCode.S))
+        else if (Input.GetKey(KeyCode.Y))
         {
             nouvelInput = 6;
         }
-        else if (Input.GetKey(KeyCode.D))
+        else if (Input.GetKey(KeyCode.U))
         {
             nouvelInput = 7;
         }
-        else if (Input.GetKey(KeyCode.F))
+        else if (Input.GetKey(KeyCode.I))
         {
             nouvelInput = 8;
         }
