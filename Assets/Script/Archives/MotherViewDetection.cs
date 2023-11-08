@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MotherViewDetection : MonoBehaviour
 {
-    public MotherBehavior motherBehavingScript;
+    public OldPathfinding motherBehavingScript;
     private void OnTriggerStay(Collider other)
     {
         if (other.CompareTag("Obstacle"))
