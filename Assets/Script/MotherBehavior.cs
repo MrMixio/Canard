@@ -32,7 +32,7 @@ public class MotherBehavior : MonoBehaviour
         //transform.position = Vector3.MoveTowards(transform.position, currentWaypoint.position, motherSpeed / 4);
         directWaypoint = currentWaypoint.position;
 
-        Vector3 lerpedDirection = Vector3.RotateTowards(transform.forward, (directWaypoint - transform.position).normalized, 0.02f, 1);
+        Vector3 lerpedDirection = Vector3.RotateTowards(transform.forward, (directWaypoint - transform.position), 0.02f, 1);
         transform.rotation = Quaternion.LookRotation(lerpedDirection);
 
         //Vector3 rotateAngle = Vector3.RotateTowards(transform.forward, directWaypoint - transform.position, 10, 1);

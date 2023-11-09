@@ -7,6 +7,11 @@ public class ScreamBar : MonoBehaviour
     public GameObject _screamBarSprite;
     public GameObject _canvasBarObject;
 
+    private void Start()
+    {
+        _canvasBarObject.SetActive(false);
+    }
+
     public void ToggeScreamBar(bool _isToggled)
     {
         _canvasBarObject.SetActive(_isToggled);
