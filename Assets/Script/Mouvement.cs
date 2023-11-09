@@ -1,3 +1,4 @@
+
 using UnityEngine;
 
 public class Mouvement : MonoBehaviour
@@ -5,9 +6,22 @@ public class Mouvement : MonoBehaviour
     private Rigidbody rb;
     public float vitesse = 5.0f;
     public float rotationSpeed = 45.0f;
-    private int dernierInput = 0;
-    private int nouvelInput = 0;
+
+    [Header("roulette gauche")]
+    [SerializeField]
+    private int _nouvelInputL;
+    [SerializeField]
+    private int _dernierInputL;
+
+    [Header("roulette droite")]
+    [SerializeField]
+    private int _nouvelInputR;
+    [SerializeField]
+    private int _dernierInputR;
+
+
     public float deceleration = 3f;
+    [SerializeField]
     private Vector3 moveDirection = Vector3.zero;
     private float rotationSpeedRight = 0.0f;
     private float rotationSpeedLeft = 0.0f;
@@ -19,63 +33,176 @@ public class Mouvement : MonoBehaviour
 
     private void Update()
     {
-        moveDirection = Vector3.zero;
+        //moveDirection = Vector3.zero;
 
-        if (Input.GetKey(KeyCode.A))
+        //mvt gauche
+        if (Input.GetKeyDown(KeyCode.A))
         {
-            nouvelInput = 1;
+            _nouvelInputL = 1;
         }
-        else if (Input.GetKey(KeyCode.Z))
+        if (Input.GetKeyDown(KeyCode.Z))
         {
-            nouvelInput = 2;
+            _nouvelInputL = 2;
         }
-        else if (Input.GetKey(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.E))
         {
-            nouvelInput = 3;
+            _nouvelInputL = 3;
         }
-        else if (Input.GetKey(KeyCode.R))
+        if (Input.GetKeyDown(KeyCode.R))
         {
-            nouvelInput = 4;
-        }
-        else if (Input.GetKey(KeyCode.T))
-        {
-            nouvelInput = 5;
-        }
-        else if (Input.GetKey(KeyCode.Y))
-        {
-            nouvelInput = 6;
-        }
-        else if (Input.GetKey(KeyCode.U))
-        {
-            nouvelInput = 7;
-        }
-        else if (Input.GetKey(KeyCode.I))
-        {
-            nouvelInput = 8;
+            _nouvelInputL = 4;
         }
 
-        if (nouvelInput > dernierInput)
+        //mvt droite
+        if (Input.GetKeyDown(KeyCode.T))
         {
-            if (nouvelInput <= 4)
-            {
-                moveDirection = transform.forward * vitesse;
-                rotationSpeedRight = -rotationSpeed;
-                if (nouvelInput > 4)
-                {
-                    rotationSpeedLeft = 0.0f;
-                }
-            }
-            else
-            {
-                moveDirection = transform.forward * vitesse;
-                rotationSpeedLeft = rotationSpeed;
-                if (nouvelInput <= 4)
-                {
-                    rotationSpeedRight = 0.0f;
-                }
-            }
+            _nouvelInputR = 5;
         }
-       
+        if (Input.GetKeyDown(KeyCode.Y))
+        {
+            _nouvelInputR = 6;
+        }
+        if (Input.GetKeyDown(KeyCode.U))
+        {
+            _nouvelInputR = 7;
+        }
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            _nouvelInputR = 8;
+        }
+
+        Debug.Log("_nouvelInputR : " + _nouvelInputR + "\n _dernierInputR : " + _dernierInputR);
+
+        //gestion gauche
+        switch (_nouvelInputL)
+        {
+            case 1:
+                if (_dernierInputL == 4)//avance
+                {
+                    moveDirection = transform.forward * vitesse;
+                    rotationSpeedRight = -rotationSpeed; // rotation gauche
+                }
+
+                if (_dernierInputL == 2)//recul
+                {
+                    moveDirection = -transform.forward * vitesse;
+                    rotationSpeedRight = rotationSpeed; // rotation gauche
+                }
+
+                break;
+
+            case 2:
+                if (_dernierInputL == 1)//avance
+                {
+                    moveDirection = transform.forward * vitesse;
+                    rotationSpeedRight = -rotationSpeed; // rotation gauche
+                }
+
+                if (_dernierInputL == 3)//recul
+                {
+                    moveDirection = -transform.forward * vitesse;
+                    rotationSpeedRight = rotationSpeed; // rotation gauche
+                }
+                break;
+
+            case 3:
+                if (_dernierInputL == 2)//avance
+                {
+                    moveDirection = transform.forward * vitesse;
+                    rotationSpeedRight = -rotationSpeed; // rotation gauche
+                }
+
+                if (_dernierInputL == 4)//recul
+                {
+                    moveDirection = -transform.forward * vitesse;
+                    rotationSpeedRight = rotationSpeed; // rotation gauche
+                }
+                break;
+
+            case 4:
+                if (_dernierInputL == 3)//avance
+                {
+                    moveDirection = transform.forward * vitesse;
+                    rotationSpeedRight = -rotationSpeed; // rotation gauche
+                }
+
+                if (_dernierInputL == 1)//recul
+                {
+                    moveDirection = -transform.forward * vitesse;
+                    rotationSpeedRight = rotationSpeed; // rotation gauche
+                }
+                break;
+
+            default:
+                break;
+        }
+
+
+        // gestion droit
+
+        switch (_nouvelInputR)
+        {
+            case 5:
+                if (_dernierInputR == 8)//avance
+                {
+                    moveDirection = transform.forward * vitesse;
+                    rotationSpeedRight = rotationSpeed; //rotation à droite
+                }
+
+                if (_dernierInputR == 6)//recul
+                {
+                    moveDirection = -transform.forward * vitesse;
+                    rotationSpeedRight = -rotationSpeed;
+                }
+
+                break;
+
+            case 6:
+                if (_dernierInputR == 5)//avance
+                {
+                    moveDirection = transform.forward * vitesse;
+                    rotationSpeedRight = rotationSpeed; //rotation à droite
+                }
+
+                if (_dernierInputR == 7)//recul
+                {
+                    moveDirection = -transform.forward * vitesse;
+                    rotationSpeedRight = -rotationSpeed;
+                }
+                break;
+
+            case 7:
+                if (_dernierInputR == 6)//avance
+                {
+                    moveDirection = transform.forward * vitesse;
+                    rotationSpeedRight = rotationSpeed; //rotation à droite
+                }
+
+                if (_dernierInputR == 8)//recul
+                {
+                    moveDirection = -transform.forward * vitesse;
+                    rotationSpeedRight = -rotationSpeed;
+                }
+                break;
+
+            case 8:
+                if (_dernierInputR == 7)//avance
+                {
+                    moveDirection = transform.forward * vitesse;
+                    rotationSpeedRight = rotationSpeed; //rotation à droite
+                }
+
+                if (_dernierInputR == 5)//recul
+                {
+                    moveDirection = -transform.forward * vitesse;
+                    rotationSpeedRight = -rotationSpeed;
+                }
+                break;
+
+            default:
+                break;
+
+        }
 
         rotationSpeedRight = Mathf.Lerp(rotationSpeedRight, 0, deceleration * Time.deltaTime);
         rotationSpeedLeft = Mathf.Lerp(rotationSpeedLeft, 0, deceleration * Time.deltaTime);
@@ -84,16 +211,19 @@ public class Mouvement : MonoBehaviour
 
         if (moveDirection != Vector3.zero)
         {
+            Debug.Log("ici zero");
             rb.velocity = moveDirection;
         }
         else
         {
+            Debug.Log("là bouge");
+
             rb.velocity *= 1f - deceleration * Time.deltaTime;
         }
 
-        if (nouvelInput > 0)
-        {
-            dernierInput = nouvelInput;
-        }
+
+        _dernierInputL = _nouvelInputL;
+        _dernierInputR = _nouvelInputR;
+
     }
 }
