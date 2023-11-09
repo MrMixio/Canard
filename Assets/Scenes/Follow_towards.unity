@@ -493,7 +493,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _rb: {fileID: 0}
   _randNumber: 0
-  _range: 50
+  _range: 500
   _timerPress: 5
   _timeSave: 0
   _isTrigger: 0
