@@ -7,44 +7,132 @@ using UnityEngine.Rendering;
 
 public class MotherBehavior : MonoBehaviour
 {
-    [SerializeField] private Waypoints waypoints;
+    [SerializeField] private Waypoints _scriptWaypoints;
 
-    public float motherSpeed = 5f;
-    public float waypointDistanceTreshold = 1f;
+    [Header("Movement")]
+    private bool _isMoving;
+    public float _motherSpeed = 5f;
+    private Rigidbody _rb;
+    public float _smoothVelocity;//rotation
+    public float _smoothTurnWaypoint = 0.02f;
 
-    private Transform currentWaypoint;
+    [Header("Waypoints")]
+    private Transform _currentWaypoint;
     private Vector3 directWaypoint;
+    public float _waypointDistanceTreshold = 1f;
 
-    private Rigidbody rb;
+
+    [Header("Aggro")]
+    public bool _isAggro;
+    public bool _isScream;
+    public Transform _player;
+
 
     void Start()
     {
-        rb = GetComponent<Rigidbody>();
+        StartMoving();
 
-        currentWaypoint = waypoints.GetNextWaypoint(currentWaypoint);
-        transform.position = currentWaypoint.position;
+        _rb = GetComponent<Rigidbody>();
 
-        currentWaypoint = waypoints.GetNextWaypoint(currentWaypoint);
+        _currentWaypoint = _scriptWaypoints.GetNextWaypoint(_currentWaypoint);
+        transform.position = _currentWaypoint.position;
+
+        _currentWaypoint = _scriptWaypoints.GetNextWaypoint(_currentWaypoint);
     }
 
     private void FixedUpdate()
     {
-        //transform.position = Vector3.MoveTowards(transform.position, currentWaypoint.position, motherSpeed / 4);
-        directWaypoint = currentWaypoint.position;
 
-        Vector3 lerpedDirection = Vector3.RotateTowards(transform.forward, (directWaypoint - transform.position).normalized, 0.02f, 1);
-        transform.rotation = Quaternion.LookRotation(lerpedDirection);
+        if (!_isMoving) return;
 
-        //Vector3 rotateAngle = Vector3.RotateTowards(transform.forward, directWaypoint - transform.position, 10, 1);
-        //Debug.Log(rotateAngle);
-        //transform.rotation = Quaternion.Euler(0,rotateAngle.y,0);
-        rb.velocity = transform.forward * motherSpeed * 5;
-
-        if (Vector3.Distance(transform.position, currentWaypoint.position) < waypointDistanceTreshold)
+        if (_isAggro) // on aggro de joueur
         {
-            currentWaypoint = waypoints.GetNextWaypoint(currentWaypoint);
+
+            Vector3 _dir = RotateTowardsPlayer(_player);
+
+            //_rb.AddForce(_moveDir.normalized * _speed * Time.deltaTime);
+            _rb.velocity = _dir * _motherSpeed;
+
+
+            // WAYPOINT MARIU
+
         }
+        else
+        {
+            //transform.position = Vector3.MoveTowards(transform.position, _currentWaypoint.position, motherSpeed / 4);
+            directWaypoint = _currentWaypoint.position;
+
+            Vector3 lerpedDirection = Vector3.RotateTowards(transform.forward, (directWaypoint - transform.position).normalized, _smoothTurnWaypoint, 1);
+            transform.rotation = Quaternion.LookRotation(lerpedDirection);
+
+            //Vector3 rotateAngle = Vector3.RotateTowards(transform.forward, directWaypoint - transform.position, 10, 1);
+            //Debug.Log(rotateAngle);
+            //transform.rotation = Quaternion.Euler(0,rotateAngle.y,0);
+            _rb.velocity = transform.forward * _motherSpeed * 5;
+
+            if (Vector3.Distance(transform.position, _currentWaypoint.position) < _waypointDistanceTreshold)
+            {
+                _currentWaypoint = _scriptWaypoints.GetNextWaypoint(_currentWaypoint);
+            }
+        }
+
+
+        if (_isScream)
+        {
+            Scream();
+        }
+
     }
+
+    public void StartMoving()
+    {
+        _isMoving = true;
+    }
+    public void StopMoving()
+    {
+        _isMoving = false;
+    }
+
+    public void updateTrigger(bool _set)
+    {
+        _isAggro = _set;
+    }
+
+    public bool getTrigger()
+    {
+        return _isAggro;
+    }
+
+    public void isScreaming(bool _set = false)
+    {
+        _isScream = _set;
+    }
+
+    void Scream()
+    {
+        if (!_isAggro) // si cane va sur player, on ne met pas la velocité à 0
+            _rb.velocity = Vector3.zero;
+
+        RotateTowardsPlayer(_player); // pas stocké dans variable car on ne veut pas ajouter de la velocité
+    }
+
+    public Transform getCurrentWaypoint()
+    {
+        return _currentWaypoint;
+    }
+
+    public Vector3 RotateTowardsPlayer(Transform _posTarget)
+    {
+        Vector3 _dir = _posTarget.position - transform.position;
+        float _targetAngle = Mathf.Atan2(_dir.x, _dir.z) * Mathf.Rad2Deg;
+        float _angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, _targetAngle, ref _smoothVelocity, 0.1f);
+
+        transform.rotation = Quaternion.Euler(0f, _angle, 0f);
+
+        return _dir;
+    }
+
+
 
     private void Update()
     {
