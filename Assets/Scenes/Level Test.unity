@@ -14484,7 +14484,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _scriptWaypoints: {fileID: 298616299}
-  _motherSpeed: 2
+  _motherSpeed: 1
   _smoothVelocity: 0
   _smoothTurnWaypoint: 0.02
   _waypointDistanceTreshold: 1
@@ -18902,7 +18902,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1454143397}
   m_LocalRotation: {x: -0, y: -0.70710576, z: -0, w: 0.70710784}
-  m_LocalPosition: {x: -5, y: 2.2, z: 1.8}
+  m_LocalPosition: {x: -16.39, y: 2.2, z: 1.8}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
