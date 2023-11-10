@@ -63,15 +63,10 @@ public class MotherBehavior : MonoBehaviour
         {
             //transform.position = Vector3.MoveTowards(transform.position, _currentWaypoint.position, motherSpeed / 4);
             directWaypoint = _currentWaypoint.position;
-
-            Vector3 lerpedDirection = Vector3.RotateTowards(transform.forward, (directWaypoint - transform.position).normalized, _smoothTurnWaypoint, 1);
+            Vector3 lerpedDirection = Vector3.RotateTowards(transform.forward, (currentWaypoint.position - transform.position).normalized, 0.1f, 1);
             transform.rotation = Quaternion.LookRotation(lerpedDirection);
-
-            //Vector3 rotateAngle = Vector3.RotateTowards(transform.forward, directWaypoint - transform.position, 10, 1);
-            //Debug.Log(rotateAngle);
-            //transform.rotation = Quaternion.Euler(0,rotateAngle.y,0);
-            _rb.velocity = transform.forward * _motherSpeed * 5;
-
+            transform.position = Vector3.MoveTowards(transform.position, currentWaypoint.position, motherSpeed / 30);
+        
             if (Vector3.Distance(transform.position, _currentWaypoint.position) < _waypointDistanceTreshold)
             {
                 _currentWaypoint = _scriptWaypoints.GetNextWaypoint(_currentWaypoint);
@@ -112,10 +107,10 @@ public class MotherBehavior : MonoBehaviour
 
     void Scream()
     {
-        if (!_isAggro) // si cane va sur player, on ne met pas la velocité à 0
+        if (!_isAggro) // si cane va sur player, on ne met pas la velocitï¿½ ï¿½ 0
             _rb.velocity = Vector3.zero;
 
-        RotateTowardsPlayer(_player); // pas stocké dans variable car on ne veut pas ajouter de la velocité
+        RotateTowardsPlayer(_player); // pas stockï¿½ dans variable car on ne veut pas ajouter de la velocitï¿½
     }
 
     public Transform getCurrentWaypoint()
