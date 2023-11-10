@@ -12521,16 +12521,16 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1016790739}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 579ffbecc5c92554883fe6e0061bfc3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _mother: {fileID: 0}
+  _mother: {fileID: 1072975233}
   _saveTime: 2
   _timer: 0
   _activeTimer: 0
-  _scriptMother: {fileID: 0}
+  _scriptMother: {fileID: 1072975235}
 --- !u!64 &1016790742
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -13852,7 +13852,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh169624
+  m_Name: pb_Mesh128780
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -14484,7 +14484,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _scriptWaypoints: {fileID: 298616299}
-  _motherSpeed: 1
+  _motherSpeed: 2
   _smoothVelocity: 0
   _smoothTurnWaypoint: 0.02
   _waypointDistanceTreshold: 1
@@ -29069,6 +29069,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _chronoText: {fileID: 1383888139}
+  _scriptMother: {fileID: 0}
 --- !u!4 &8528172824731161485
 Transform:
   m_ObjectHideFlags: 0
