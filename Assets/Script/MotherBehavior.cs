@@ -23,15 +23,14 @@ public class MotherBehavior : MonoBehaviour
     private Vector3 directWaypoint;
     public float _waypointDistanceTreshold = 1f;
 
-
     [Header("Aggro")]
     public bool _isAggro;
     public bool _isScream;
     public Transform _player;
 
-
     void Start()
     {
+       
         StartMoving();
 
         _rb = GetComponent<Rigidbody>();
