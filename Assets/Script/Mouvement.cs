@@ -8,17 +8,21 @@ public class Mouvement : MonoBehaviour
     public float rotationSpeed = 45.0f;
 
     [Header("roulette gauche")]
-    [SerializeField]
+    /*[SerializeField]
     private int _nouvelInputL;
     [SerializeField]
     private int _dernierInputL;
+    */
+    int positionActuelle1 = 1;
 
     [Header("roulette droite")]
+    /*
     [SerializeField]
     private int _nouvelInputR;
     [SerializeField]
     private int _dernierInputR;
-
+    */
+    int positionActuelle2 = 1;
 
     public float deceleration = 3f;
     [SerializeField]
@@ -38,41 +42,43 @@ public class Mouvement : MonoBehaviour
         //mvt gauche
         if (Input.GetKeyDown(KeyCode.A))
         {
-            _nouvelInputL = 1;
+            VerifierProgression1(1);
         }
         if (Input.GetKeyDown(KeyCode.Z))
         {
-            _nouvelInputL = 2;
+            VerifierProgression1(2);
         }
         if (Input.GetKeyDown(KeyCode.E))
         {
-            _nouvelInputL = 3;
+            VerifierProgression1(3);
         }
         if (Input.GetKeyDown(KeyCode.R))
         {
-            _nouvelInputL = 4;
+            VerifierProgression1(4);
         }
 
         //mvt droite
         if (Input.GetKeyDown(KeyCode.T))
         {
-            _nouvelInputR = 5;
+            VerifierProgression2(1);
         }
         if (Input.GetKeyDown(KeyCode.Y))
         {
-            _nouvelInputR = 6;
+            VerifierProgression2(2);
         }
         if (Input.GetKeyDown(KeyCode.U))
         {
-            _nouvelInputR = 7;
+            VerifierProgression2(3);
         }
         if (Input.GetKeyDown(KeyCode.I))
         {
-            _nouvelInputR = 8;
+            VerifierProgression2(4);
         }
 
-        Debug.Log("_nouvelInputR : " + _nouvelInputR + "\n _dernierInputR : " + _dernierInputR);
 
+        /*
+        Debug.Log("_nouvelInputR : " + _nouvelInputR + "\n _dernierInputR : " + _dernierInputR);
+        
         //gestion gauche
         switch (_nouvelInputL)
         {
@@ -203,7 +209,7 @@ public class Mouvement : MonoBehaviour
                 break;
 
         }
-
+        */
         rotationSpeedRight = Mathf.Lerp(rotationSpeedRight, 0, deceleration * Time.deltaTime);
         rotationSpeedLeft = Mathf.Lerp(rotationSpeedLeft, 0, deceleration * Time.deltaTime);
 
@@ -221,9 +227,93 @@ public class Mouvement : MonoBehaviour
             rb.velocity *= 1f - deceleration * Time.deltaTime;
         }
 
-
+        /*
         _dernierInputL = _nouvelInputL;
         _dernierInputR = _nouvelInputR;
-
+        */
     }
+
+
+
+
+    void VerifierProgression1(int nouvellePosition)
+    {
+        int distance = nouvellePosition - positionActuelle1;
+
+        Debug.Log("nouvellePosition : " + nouvellePosition + " \n positionActuelle : " + positionActuelle1 + " \n distance : " + distance);
+
+        if (distance == 1 || distance == -3)
+        {
+            Debug.Log("Vous montez dans la série.");
+            positionActuelle1 = nouvellePosition; // Màj position actuelle
+            moveDirection = transform.forward * vitesse;
+            rotationSpeedRight = -rotationSpeed; // rotation gauche
+        }
+        else if (distance == -1 || distance == 3)
+        {
+            Debug.Log("Vous descendez dans la série.");
+            positionActuelle1 = nouvellePosition; // Màj position actuelle
+            moveDirection = -transform.forward * vitesse;
+            rotationSpeedRight = rotationSpeed; // rotation gauche
+        }
+        else if (distance > 1)
+        {
+            Debug.Log("Vous montez dans la série avec un saut de " + distance + ".");
+            positionActuelle1 = nouvellePosition; // Màj position actuelle
+            moveDirection = transform.forward * vitesse;
+            rotationSpeedRight = -rotationSpeed; // rotation gauche
+        }
+        else if (distance < -1)
+        {
+            Debug.Log("Vous descendez dans la série avec un saut de " + Mathf.Abs(distance) + ".");
+            positionActuelle1 = nouvellePosition; // Màj position actuelle
+            moveDirection = -transform.forward * vitesse;
+            rotationSpeedRight = rotationSpeed; // rotation gauche
+        }
+        else
+        {
+            Debug.Log("Mouvement incorrect dans la série.");
+        }
+    }
+
+    void VerifierProgression2(int nouvellePosition)
+    {
+        int distance = nouvellePosition - positionActuelle2;
+
+        Debug.Log("nouvellePosition : " + nouvellePosition + " \n positionActuelle : " + positionActuelle2 + " \n distance : " + distance);
+
+        if (distance == 1 || distance == -3)
+        {
+            Debug.Log("Vous montez dans la série.");
+            positionActuelle2 = nouvellePosition; // Màj position actuelle
+            moveDirection = transform.forward * vitesse;
+            rotationSpeedRight = rotationSpeed; //rotation à droite
+        }
+        else if (distance == -1 || distance == 3)
+        {
+            Debug.Log("Vous descendez dans la série.");
+            positionActuelle2 = nouvellePosition; // Màj position actuelle
+            moveDirection = -transform.forward * vitesse;
+            rotationSpeedRight = -rotationSpeed;
+        }
+        else if (distance > 1)
+        {
+            Debug.Log("Vous montez dans la série avec un saut de " + distance + ".");
+            positionActuelle2 = nouvellePosition; // Màj position actuelle
+            moveDirection = transform.forward * vitesse;
+            rotationSpeedRight = rotationSpeed; //rotation à droite
+        }
+        else if (distance < -1)
+        {
+            Debug.Log("Vous descendez dans la série avec un saut de " + Mathf.Abs(distance) + ".");
+            positionActuelle2 = nouvellePosition; // Màj position actuelle
+            moveDirection = -transform.forward * vitesse;
+            rotationSpeedRight = -rotationSpeed;
+        }
+        else
+        {
+            Debug.Log("Mouvement incorrect dans la série.");
+        }
+    }
+
 }
