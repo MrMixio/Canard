@@ -573,7 +573,7 @@ MonoBehaviour:
   _range: 500
   _timerPress: 5
   _timeSavePress: 0
-  _timerActiveAggro: 15
+  _timerActiveAggro: 0
   _timeMaxActiveAggro: 0
   _isAggro: 0
   _scriptMother: {fileID: 198569627}
@@ -590,9 +590,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _scriptWaypoints: {fileID: 2005905198}
-  _motherSpeed: 0.5
-  _smoothVelocity: 3
-  _smoothTurnWaypoint: 0.1
+  _motherSpeed: 5
+  _smoothVelocity: 0
+  _smoothTurnWaypoint: 0.02
   _waypointDistanceTreshold: 1
   _isAggro: 0
   _isScream: 0
@@ -1256,10 +1256,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   vitesse: 5
   rotationSpeed: 50
-  _nouvelInputL: 0
-  _dernierInputL: 0
-  _nouvelInputR: 0
-  _dernierInputR: 0
   deceleration: 3
   moveDirection: {x: 0, y: 0, z: 0}
 --- !u!54 &1030446120
@@ -3277,7 +3273,7 @@ MonoBehaviour:
   _saveTime: 2
   _timer: 0
   _activeTimer: 0
-  _scriptMother: {fileID: 198569627}
+  _scriptMother: {fileID: 0}
 --- !u!1001 &2477911242319523056
 PrefabInstance:
   m_ObjectHideFlags: 0
