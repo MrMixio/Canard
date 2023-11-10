@@ -14,7 +14,7 @@ public class DetectionMother : MonoBehaviour
     [SerializeField]
     private float _timer;
     public bool _activeTimer;
-    public MoveMother _scriptMother;
+    public MotherBehavior _scriptMother;
 
     // Start is called before the first frame update
     void Start()
@@ -68,7 +68,7 @@ public class DetectionMother : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.CompareTag("Player") && !_scriptMother._isTrigger)
+        if (other.CompareTag("Player") && !_scriptMother.getTrigger())
         {
             TimerReset();
         }
@@ -77,7 +77,7 @@ public class DetectionMother : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Player") && !_scriptMother._isTrigger)
+        if (other.CompareTag("Player") && !_scriptMother.getTrigger())
         {
             _activeTimer = true; // on met en marche le timer
         }

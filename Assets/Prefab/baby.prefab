@@ -228,4 +228,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _motherDuck: {fileID: 0}
   _limite: 2
-  _speed: 1
+  _speed: 1.5
+  _smoothVelocity: 0

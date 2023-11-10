@@ -10,15 +10,21 @@ public class MoveMother : MonoBehaviour
 
     public float _speed;
 
-    public Transform[] _wayPoints;
-    public int _index = 0;
     private Rigidbody _rb;
 
-    public bool _isTrigger;
+    public bool _isAggro;
     public Transform _player;
-    public float _smoothVelocity;
+    public float _smoothVelocity;//rotation
 
     public bool _isScream;
+
+
+    [Header("Waypoints")]
+    private Transform currentWaypoint;
+    private Vector3 directWaypoint;
+    public float waypointDistanceTreshold = 1f;
+    //public Transform[] _wayPoints;
+    // public int _index = 0;
 
 
     // Start is called before the first frame update
@@ -34,7 +40,7 @@ public class MoveMother : MonoBehaviour
         if (!_isMoving) return;
 
 
-        if (_isTrigger) // on aggro de joueur
+        if (_isAggro) // on aggro de joueur
         {
             /*
             Vector3 _dir = _player.position - transform.position;
@@ -44,7 +50,7 @@ public class MoveMother : MonoBehaviour
             transform.rotation = Quaternion.Euler(0f, _angle, 0f);
 
             */
-            Vector3 _dir = RotateTowardsPlayer();
+            Vector3 _dir = RotateTowardsPlayer(_player);
 
             //_rb.AddForce(_moveDir.normalized * _speed * Time.deltaTime);
             _rb.velocity = _dir * _speed;
@@ -95,7 +101,7 @@ public class MoveMother : MonoBehaviour
 
     public void updateTrigger(bool _set)
     {
-        _isTrigger = _set;
+        _isAggro = _set;
     }
 
 
@@ -106,15 +112,15 @@ public class MoveMother : MonoBehaviour
 
     void Scream()
     {
-        if(!_isTrigger) // si cane va sur player, on ne met pas la velocité à 0
+        if(!_isAggro) // si cane va sur player, on ne met pas la velocité à 0
             _rb.velocity = Vector3.zero;
 
-        RotateTowardsPlayer(); // pas stocké dans variable car on ne veut pas ajouter de la velocité
+        RotateTowardsPlayer(_player); // pas stocké dans variable car on ne veut pas ajouter de la velocité
     }
 
-    public Vector3 RotateTowardsPlayer()
+    public Vector3 RotateTowardsPlayer(Transform _posTarget)
     {
-        Vector3 _dir = _player.position - transform.position;
+        Vector3 _dir = _posTarget.position - transform.position;
         float _targetAngle = Mathf.Atan2(_dir.x, _dir.z) * Mathf.Rad2Deg;
         float _angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, _targetAngle, ref _smoothVelocity, 0.1f);
 
