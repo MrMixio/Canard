@@ -29069,7 +29069,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _chronoText: {fileID: 1383888139}
-  _scriptMother: {fileID: 0}
+  _scriptMother: {fileID: 1072975235}
 --- !u!4 &8528172824731161485
 Transform:
   m_ObjectHideFlags: 0
