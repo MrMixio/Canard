@@ -29,16 +29,23 @@ public class MotherBehavior : MonoBehaviour
 
     private void FixedUpdate()
     {
-        //transform.position = Vector3.MoveTowards(transform.position, currentWaypoint.position, motherSpeed / 4);
         directWaypoint = currentWaypoint.position;
-
-        Vector3 lerpedDirection = Vector3.RotateTowards(transform.forward, (directWaypoint - transform.position), 0.02f, 1);
+        Vector3 lerpedDirection = Vector3.RotateTowards(transform.forward, (currentWaypoint.position - transform.position).normalized, 0.1f, 1);
         transform.rotation = Quaternion.LookRotation(lerpedDirection);
+        transform.position = Vector3.MoveTowards(transform.position, currentWaypoint.position, motherSpeed / 30);
+
+        //Vector3 Direction = Vector3.RotateTowards(transform.forward, (currentWaypoint.position - transform.position).normalized, 0.01f, 1);
+        //float lerpedDirection = Mathf.Lerp(Dire);
+        //transform.rotation = Quaternion.Euler(0, transform.forward.y + Direction.y, 0);
+        //Debug.Log(transform.rotation.y + Direction.y);
+
+        //Vector3 lerpedDirection = Vector3.RotateTowards(transform.forward, (directWaypoint - transform.position), 0.02f, 1);
+        //transform.rotation = Quaternion.LookRotation(lerpedDirection);
 
         //Vector3 rotateAngle = Vector3.RotateTowards(transform.forward, directWaypoint - transform.position, 10, 1);
         //Debug.Log(rotateAngle);
         //transform.rotation = Quaternion.Euler(0,rotateAngle.y,0);
-        rb.velocity = transform.forward * motherSpeed * 5;
+        //rb.velocity = transform.forward * motherSpeed * 5;
 
         if (Vector3.Distance(transform.position, currentWaypoint.position) < waypointDistanceTreshold)
         {
