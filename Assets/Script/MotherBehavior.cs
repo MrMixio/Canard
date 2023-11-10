@@ -4,6 +4,8 @@ using System.Net.Sockets;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.SceneManagement;
+
 
 public class MotherBehavior : MonoBehaviour
 {
@@ -132,7 +134,14 @@ public class MotherBehavior : MonoBehaviour
         return _dir;
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Player") && _isAggro)
+        {
+            SceneManager.LoadScene("Game_Over");
 
+        }
+    }
 
     private void Update()
     {
