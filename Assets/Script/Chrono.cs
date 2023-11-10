@@ -1,18 +1,19 @@
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class Chrono : MonoBehaviour
 {
-    public Text chronoText;
-    private float elapsedTime;
+    public TextMeshProUGUI _chronoText;
+    private float _elapsedTime;
 
     void Update()
     {
-        elapsedTime += Time.deltaTime;
+        _elapsedTime += Time.deltaTime;
 
-        int minutes = Mathf.FloorToInt(elapsedTime / 60);
-        int seconds = Mathf.FloorToInt(elapsedTime % 60);
+        int _minutes = Mathf.FloorToInt(_elapsedTime / 60);
+        int _seconds = Mathf.FloorToInt(_elapsedTime % 60);
 
-        chronoText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+        _chronoText.text = string.Format("{0:00}:{1:00}", _minutes, _seconds);
     }
 }

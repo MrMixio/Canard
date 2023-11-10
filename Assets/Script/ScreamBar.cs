@@ -5,20 +5,20 @@ using UnityEngine.UI;
 public class ScreamBar : MonoBehaviour
 {
     public GameObject _screamBarSprite;
-    public GameObject _canvasBarObject;
+    public GameObject _foreGroundSprite;
 
     private void Start()
     {
-        _canvasBarObject.SetActive(false);
+        _screamBarSprite.SetActive(false);
     }
 
-    public void ToggeScreamBar(bool _isToggled)
+    public void ToggleScreamBar(bool _isToggled)
     {
-        _canvasBarObject.SetActive(_isToggled);
+        _screamBarSprite.SetActive(_isToggled);
     }
 
     public void UpdateScreamBar(float _maxTimerScream, float _currentTimerScream)
     {
-        _screamBarSprite.GetComponent<Image>().fillAmount = _currentTimerScream / _maxTimerScream; 
+        _foreGroundSprite.GetComponent<Image>().fillAmount = _currentTimerScream / _maxTimerScream; 
     }
 }

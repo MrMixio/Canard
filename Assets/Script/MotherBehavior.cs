@@ -23,15 +23,14 @@ public class MotherBehavior : MonoBehaviour
     private Vector3 directWaypoint;
     public float _waypointDistanceTreshold = 1f;
 
-
     [Header("Aggro")]
     public bool _isAggro;
     public bool _isScream;
     public Transform _player;
 
-
     void Start()
     {
+       
         StartMoving();
 
         _rb = GetComponent<Rigidbody>();
@@ -55,30 +54,33 @@ public class MotherBehavior : MonoBehaviour
             //_rb.AddForce(_moveDir.normalized * _speed * Time.deltaTime);
             _rb.velocity = _dir * _motherSpeed;
 
-
-            // WAYPOINT MARIU
-
         }
-        else
+        else if(!_isScream)
         {
+            _rb.velocity = Vector3.zero;
             //transform.position = Vector3.MoveTowards(transform.position, _currentWaypoint.position, motherSpeed / 4);
             directWaypoint = _currentWaypoint.position;
-            Vector3 lerpedDirection = Vector3.RotateTowards(transform.forward, (currentWaypoint.position - transform.position).normalized, 0.1f, 1);
+            Vector3 lerpedDirection = Vector3.RotateTowards(transform.forward, (_currentWaypoint.position - transform.position).normalized, 0.1f, 1);
             transform.rotation = Quaternion.LookRotation(lerpedDirection);
-            transform.position = Vector3.MoveTowards(transform.position, currentWaypoint.position, motherSpeed / 30);
-        
+            transform.position = Vector3.MoveTowards(transform.position, _currentWaypoint.position, _motherSpeed / 30);
+            
+
             if (Vector3.Distance(transform.position, _currentWaypoint.position) < _waypointDistanceTreshold)
             {
                 _currentWaypoint = _scriptWaypoints.GetNextWaypoint(_currentWaypoint);
             }
         }
 
-
         if (_isScream)
         {
             Scream();
         }
 
+    }
+    private void Update()
+    {
+        Debug.DrawRay(transform.position, transform.forward * 5, Color.magenta);
+        Debug.DrawRay(transform.position, directWaypoint - transform.position, Color.white);
     }
 
     public void StartMoving()
@@ -107,10 +109,11 @@ public class MotherBehavior : MonoBehaviour
 
     void Scream()
     {
-        if (!_isAggro) // si cane va sur player, on ne met pas la velocit� � 0
+        
+        if (!_isAggro) // si cane va sur player, on ne met pas la velocite a 0
             _rb.velocity = Vector3.zero;
-
-        RotateTowardsPlayer(_player); // pas stock� dans variable car on ne veut pas ajouter de la velocit�
+        
+        RotateTowardsPlayer(_player); // pas stocké dans variable car on ne veut pas ajouter de la velocite
     }
 
     public Transform getCurrentWaypoint()
@@ -138,11 +141,6 @@ public class MotherBehavior : MonoBehaviour
         }
     }
 
-    private void Update()
-    {
-        Debug.DrawRay(transform.position, transform.forward * 5, Color.magenta);
-        Debug.DrawRay(transform.position, directWaypoint - transform.position, Color.white);
-    }
 
     private void OnDrawGizmos()
     {

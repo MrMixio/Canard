@@ -16,7 +16,7 @@ public class StartMenu : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.B) || Input.GetKey(KeyCode.N))
         {
-            SceneManager.LoadScene("Follow_towards");
+            SceneManager.LoadScene("Level Test");
 
         }
 

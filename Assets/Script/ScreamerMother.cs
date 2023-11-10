@@ -5,8 +5,6 @@ using UnityEngine;
 public class ScreamerMother : MonoBehaviour
 {
 
-    public Rigidbody _rb;
-
     [SerializeField]
     private int  _randNumber;
 
@@ -20,6 +18,7 @@ public class ScreamerMother : MonoBehaviour
 
     public bool _isAggro;
     public MotherBehavior _scriptMother;
+    public ScreamBar _scriptScreamBarTimer;
 
 
     // Start is called before the first frame update
@@ -27,7 +26,6 @@ public class ScreamerMother : MonoBehaviour
     {
         _timeSavePress = _timerPress;
         _timeMaxActiveAggro = _timerActiveAggro;
-        _rb = GetComponent<Rigidbody>();
 
     }
 
@@ -50,6 +48,9 @@ public class ScreamerMother : MonoBehaviour
             if (_isAggro)
             {
                 _timerPress -= Time.deltaTime;
+                // montre la barre timer
+                _scriptScreamBarTimer.ToggleScreamBar(true);
+                _scriptScreamBarTimer.UpdateScreamBar(_timeSavePress, _timerPress);
             }
 
             if (_timerPress <= 0)
@@ -70,6 +71,7 @@ public class ScreamerMother : MonoBehaviour
             _timerActiveAggro = _timeMaxActiveAggro;
             _scriptMother.RotateTowardsPlayer(_scriptMother.getCurrentWaypoint());
             _scriptMother.isScreaming(false);
+            _scriptScreamBarTimer.ToggleScreamBar(false); // cache la barre timer
 
             // remettre rotation canard
         }
