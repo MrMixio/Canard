@@ -63,6 +63,10 @@ public class ScreamerMother : MonoBehaviour
             _timerActiveAggro -= Time.deltaTime;
         }
 
+        if (Input.GetKey(KeyCode.B) || Input.GetKey(KeyCode.N))
+        {
+
+        }
 
         if (Input.GetKey(KeyCode.B) && Input.GetKey(KeyCode.N) && _timerPress > 0)
         {
